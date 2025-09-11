@@ -1,0 +1,147 @@
+{
+  "accion": [
+    {"nombre": "Elden Ring",
+    "descripcion": "Juego de rol de acción conocido por su elevada dificultad y gran mapa explorable.",
+    "precio": 59990,
+    "portada": "https://p325k7wa.twic.pics/high/elden-ring/elden-ring/03-news/ER-Logo-keyart-23may.jpg?twic=v1/cover=500x556/step=10/quality=80"
+  },
+  {"nombre": "Cyberpunk 2077",
+    "descripcion": "RPG de mundo abierto en un futuro distópico con elementos de ciencia ficción.",
+    "precio": 39990,
+    "portada": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Cyberpunk_2077_box_art.jpg/250px-Cyberpunk_2077_box_art.jpg"
+  },
+    {
+      "nombre": "God of War (2018)",
+      "descripcion": "Aventura de acción en la mitología nórdica junto a Atreus.",
+      "precio": 39990,
+      "portada": "https://image.api.playstation.com/vulcan/img/rnd/202011/1021/X3WIAh63yKhRRiMohLoJMeQu.png"
+    },
+     {
+      "nombre": "Red Dead Redemption 2",
+      "descripcion": "Épica historia en el Viejo Oeste con un mundo abierto increíble.",
+      "precio": 44990,
+      "portada": "https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg"
+    },
+    {
+      "nombre": "Assassin's Creed Valhalla",
+      "descripcion": "Conquista Inglaterra como un vikingo legendario.",
+      "precio": 34990,
+      "portada": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfiFv1vxtV4eRbXRdkf_-LBj1_1OM8ajoxxg&s"
+    },
+    {
+      "nombre": "DOOM Eternal",
+      "descripcion": "Acción frenética contra hordas de demonios.",
+      "precio": 29990,
+      "portada": "https://images.cdn2.buscalibre.com/fit-in/360x360/00/41/00411b323a366836a790780c8dbfe440.jpg"
+    }
+  ],
+  "aventura": [
+    {
+      "nombre": "The Legend of Zelda: Breath of the Wild",
+      "descripcion": "Un reino de Hyrule abierto a la exploración y la aventura.",
+      "precio": 54990,
+      "portada": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg/250px-The_Legend_of_Zelda_Breath_of_the_Wild.jpg"
+    },
+    {
+      "nombre": "Horizon Zero Dawn",
+      "descripcion": "Mundo postapocalíptico dominado por máquinas gigantes.",
+      "precio": 32990,
+      "portada": "https://www.planetadelibros.cl/usuaris/libros/thumbs/5aaa2e3f-d7fe-4148-988d-d18a15cbfc03/d_1200_1200/349679_portada_horizon-zero-dawn-n-0103__202106291323.webp"
+    },
+    {
+      "nombre": "Uncharted 4: A Thief's End",
+      "descripcion": "La última aventura de Nathan Drake en busca de un tesoro pirata.",
+      "precio": 29990,
+      "portada": "https://cloudfront-eu-central-1.images.arcpublishing.com/diarioas/UXT2MHW3GZIZVICCIMPIDDZEBQ.jpg"
+    },
+    {
+      "nombre": "Stray",
+      "descripcion": "Explora una ciudad cyberpunk en la piel de un gato perdido.",
+      "precio": 19990,
+      "portada": "https://i.3djuegos.com/juegos/17375/stray__2021_/fotos/ficha/stray__2021_-5712395.jpg"
+    }
+  ],
+  "deportes": [
+    {
+      "nombre": "EA Sports FC 24",
+      "descripcion": "Fútbol con licencias oficiales y modos competitivos.",
+      "precio": 49990,
+      "portada": "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2023/07/ea-sports-fc-3083570.jpg?tf=3840x"
+    },
+    {
+      "nombre": "NBA 2K24",
+      "descripcion": "Baloncesto con jugabilidad realista y MyCareer.",
+      "precio": 42990,
+      "portada": "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2023/07/nba-2k24-3076876.jpg?tf=3840x"
+    },
+    {
+      "nombre": "Gran Turismo 7",
+      "descripcion": "Simulador de conducción con gran variedad de autos y pistas.",
+      "precio": 54990,
+      "portada": "https://image.api.playstation.com/vulcan/ap/rnd/202109/1321/yZ7dpmjtHr1olhutHT57IFRh.png"
+    },
+    {
+      "nombre": "Madden NFL 24",
+      "descripcion": "Fútbol americano con modos franquicia y online.",
+      "precio": 39990,
+      "portada": "https://i.3djuegos.com/juegos/19130/madden_nfl_24/fotos/ficha/madden_nfl_24-5811894.jpg"
+    }
+  ],
+  "carreras": [
+    {
+      "nombre": "Forza Horizon 5",
+      "descripcion": "Carreras en mundo abierto ambientadas en México.",
+      "precio": 49990,
+      "portada": "https://i.3djuegos.com/juegos/18024/forza_horizon_5/fotos/ficha/forza_horizon_5-5942702.jpg"
+    },
+    {
+      "nombre": "F1 24",
+      "descripcion": "La experiencia oficial de la Fórmula 1.",
+      "precio": 52990,
+      "portada": "https://image.api.playstation.com/vulcan/ap/rnd/202404/0814/6337d7fda029c89f7d02de0825db21fdd8ab46d36cbcc82c.png"
+    },
+    {
+      "nombre": "Need for Speed Heat",
+      "descripcion": "Carreras callejeras de día y noche con personalización.",
+      "precio": 24990,
+      "portada": "https://juegosdigitaleschile.com/files/images/productos/1567460657-need-for-speed-heat-standard-edition-ps4.png"
+    },
+    {
+      "nombre": "Assetto Corsa Competizione",
+      "descripcion": "Simulación de GT3 con físicas detalladas.",
+      "precio": 29990,
+      "portada": "https://i.3djuegos.com/juegos/15607/assetto_corsa_competizione/fotos/ficha/assetto_corsa_competizione-5103162.jpg"
+    }
+  ],
+  "indie": [
+    {
+      "nombre": "Hades",
+      "descripcion": "Roguelike de acción en el inframundo griego.",
+      "precio": 14990,
+      "portada": "https://i.3djuegos.com/juegos/16330/hades/fotos/ficha/hades-5231058.jpg"
+    },
+    {
+      "nombre": "Hollow Knight",
+      "descripcion": "Metroidvania desafiante en Hallownest.",
+      "precio": 12990,
+      "portada": "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2018/03/hollow-knight-portada.jpg?tf=1200x"
+    },
+    {
+      "nombre": "Celeste",
+      "descripcion": "Plataformas con precisión y una historia emotiva.",
+      "precio": 9990,
+      "portada": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Celeste_box_art_full.png/250px-Celeste_box_art_full.png"
+    },
+    {
+      "nombre": "Stardew Valley",
+      "descripcion": "Simulador de granja con exploración y relaciones.",
+      "precio": 10990,
+      "portada": "https://upload.wikimedia.org/wikipedia/en/f/fd/Logo_of_Stardew_Valley.png"},
+      {
+        "nombre": "Lethal Company",
+      "descripcion": "Juego cooperativo de terror y supervivencia en una empresa llena de peligros.",
+      "precio": 7990,
+      "portada": "https://i.3djuegos.com/juegos/19403/lethal_company/fotos/ficha/lethal_company-5851602.webp"}
+    
+  ]
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+ <head>
+  <meta charset="UTF-8">
+  <title>Modificar Perfil</title>
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    .fecha-blanca {
+      color: white !important;
+    }
+  </style>
+ </head>
+ <body class="bg-custom">
+  <div class="form-page">
+    <div class="form-container">
+      <h2 class="form-title">Mi perfil</h2>
+      
+      <div class="profile-info mb-4">
+        <div class="mb-3">
+          <label class="profile-info-label">Tipo de usuario:</label>
+          <span id="tipoUsuario" class="badge badge-info ms-2"></span>
+        </div>
+        <div class="mb-3">
+          <label class="profile-info-label">Fecha de registro:</label>
+          <span id="fechaRegistro" class="ms-2 fecha-blanca"></span>
+        </div>
+      </div>
+      
+      <form id="formPerfil" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="nombrePerfil" class="form-label">Nombre completo</label>
+          <input type="text" class="form-control" id="nombrePerfil" required>
+          <div class="invalid-feedback">Ingrese su nombre.</div>
+        </div>
+        <div class="mb-3">
+          <label for="emailPerfil" class="form-label">Correo</label>
+          <input type="email" class="form-control" id="emailPerfil" required>
+          <div class="invalid-feedback">Ingrese un correo válido.</div>
+        </div>
+        <div class="mb-3">
+          <label for="passwordPerfil" class="form-label">Nueva Contraseña</label>
+          <input type="password" class="form-control" id="passwordPerfil">
+          <div class="form-text">Opcional: debe cumplir las validaciones si la cambia.</div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Guardar cambios</button>
+        <button type="button" class="btn logout-btn w-100 mt-3" onclick="handleLogout()">Cerrar sesión</button>
+      </form>
+      
+      <div class="form-links mt-3">
+        <a href="index.html">Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+  
+  <script src="validaciones.js" defer></script>
+  <script>
+    // cargar datos del usuario actual
+    document.addEventListener('DOMContentLoaded', function() {
+      const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
+      
+      if (!usuario) {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      // mostrar información del usuario
+      document.getElementById('nombrePerfil').value = usuario.nombre || '';
+      document.getElementById('emailPerfil').value = usuario.email || '';
+      document.getElementById('tipoUsuario').textContent = usuario.rol === 'administrador' ? 'Administrador' : 'Cliente';
+      document.getElementById('fechaRegistro').textContent = usuario.fechaRegistro || 'No disponible';
+      
+      // si es administrador, añadir opciones adicionales
+      if (usuario.rol === 'administrador') {
+        const adminOptions = document.createElement('div');
+        adminOptions.className = 'mt-3';
+        adminOptions.innerHTML = `
+          <div class="d-grid gap-2">
+            <a href="admin.html" class="btn btn-warning">Panel de Administración</a>
+          </div>
+        `;
+        document.querySelector('form').after(adminOptions);
+      }
+    });
+  </script>
+ </body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PixelPlay Games — Productos</title>
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+<script src="carrito.js"></script>
+<body class="bg-custom">
+
+<header class="container header bg-custom text-primary mb-4">
+  <a href="index.html" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
+    <img src="img/ppg-logo.png" alt="PixelPlay Games" class="ppg-logo">
+  </a>
+
+  <nav class="nav">
+    <a href="index.html">Inicio</a>
+    <a href="categoria-accion.html">Acción</a>
+    <a href="categoria-deportes.html">Deportes</a>
+    <a href="categoria-aventura.html">Aventura</a>
+    <a href="categoria-carreras.html">Carreras</a>
+    <a href="categoria-indie.html">Indie</a>
+    <a href="carrito.html" class="btn btn-outline-primary btn-sm" id="verCarrito">Carrito</a>
+  </nav>
+
+  <nav class="nav" id="navUsuario">
+    <a href="login.html" class="btn btn-primary btn-sm" id="loginLink">Iniciar sesión</a>
+    <a href="perfil.html" class="text-primary md d-none" id="perfilLink">Mi Perfil</a>
+    <a href="admin.html" class="admin-btn btn-sm d-none" id="adminLink">Admin</a>
+    <a href="registro.html" class="btn btn-outline-primary btn-sm" id="registroLink">Registrarse</a>
+    <span class="user-welcome d-none" id="userWelcome"></span>
+    <button class="btn logout-btn btn-sm d-none" id="logoutBtn" onclick="handleLogout()">Cerrar sesión</button>
+  </nav>
+</header>
+
+<main class="container text-white">
+  <h2 class="mb-3">Todos los productos</h2>
+  <div class="row" id="gridProductos"></div>
+</main>
+
+<footer class="container footer bg-custom text-primary mt-4">
+  <div>© 2025 PixelPlay Games — Sitio demostrativo para actividad PGY3221.</div>
+</footer>
+
+<script>
+  function fmtCLP(n){ 
+    return new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(n||0); 
+  }
+  function pintarProductos(){
+    const grid = document.getElementById('gridProductos');
+    const productos = JSON.parse(localStorage.getItem('productos')||'[]');
+    grid.innerHTML = '';
+    productos.forEach(p => {
+      const col = document.createElement('div');
+      col.className = 'col-md-4 mb-4';
+      col.innerHTML = `
+        <article class="category-card">
+          <div class="category-thumb">
+            <img src="${p.imagen||'img/ppg-logo.png'}" alt="Imagen de ${p.nombre}">
+          </div>
+          <div class="category-content">
+            <h3>${p.nombre}</h3>
+            <p class="small text-muted">${p.categoria||''}</p>
+            <div class="price">${fmtCLP(p.precio)}</div>
+            <button class="btn btn-primary mt-2" data-id="${p.id}" data-add>Agregar al carrito</button>
+          </div>
+        </article>`;
+      grid.appendChild(col);
+    });
+  }
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-add]');
+    if(!btn) return;
+    const id = Number(btn.dataset.id);
+    const productos = JSON.parse(localStorage.getItem('productos')||'[]');
+    const p = productos.find(x=>x.id===id);
+    if(!p) return;
+    addToCart({ id: p.id, name: p.nombre, price: p.precio, thumb: p.imagen, qty: 1 });
+  });
+  document.addEventListener('DOMContentLoaded', ()=>{
+    if(!localStorage.getItem('productos')) localStorage.setItem('productos', JSON.stringify([]));
+    pintarProductos();
+  });
+</script>
+
+<script src="validaciones.js" defer></script>
+</body>
+</html>
