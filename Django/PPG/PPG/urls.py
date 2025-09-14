@@ -16,26 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myPPG import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # Frontend pages (serve the templates directly)
-    path('', views.index, name='index'),
-    path('index.html', views.index, name='index_html'),
-    path('productos.html', views.productos, name='productos'),
-    path('perfil.html', views.perfil, name='perfil'),
-    path('login.html', views.login_view, name='login'),
-    path('registro.html', views.registro, name='registro'),
-    path('recuperar.html', views.recuperar, name='recuperar'),
-    path('carrito.html', views.carrito, name='carrito'),
-    path('admin.html', views.admin_panel, name='admin_panel'),
-
-    # Category pages
-    path('categoria-accion.html', views.categoria_accion, name='categoria_accion'),
-    path('categoria-aventura.html', views.categoria_aventura, name='categoria_aventura'),
-    path('categoria-deportes.html', views.categoria_deportes, name='categoria_deportes'),
-    path('categoria-carreras.html', views.categoria_carreras, name='categoria_carreras'),
-    path('categoria-indie.html', views.categoria_indie, name='categoria_indie'),
 ]
