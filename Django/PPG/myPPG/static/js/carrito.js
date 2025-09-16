@@ -1,7 +1,6 @@
-
+// carrito.js - Versión mejorada
 const CLP = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
 const parseCLP = (txt) => Number(String(txt).replace(/[^0-9]/g, '')) || 0;
-
 
 const CART_KEY = 'ppg_cart';
 
@@ -33,7 +32,7 @@ const Cart = {
   },
   clear() { this._save([]); },
 
-  
+  // Badge flotante del carrito
   ensureBadge() {
     if (document.getElementById('ppg-cart-badge')) return;
 
@@ -71,10 +70,7 @@ const Cart = {
   }
 };
 
-// =====================
-// aqui se ve lo de botones 
-// Busca .category-card y extrae titulo, precio y imagen.
-
+// Añadir botones "Agregar al carrito" a las tarjetas de productos
 function enhanceCards() {
   const cards = document.querySelectorAll('.category-card');
   cards.forEach((card, idx) => {
@@ -112,79 +108,11 @@ function enhanceCards() {
   });
 }
 
-
-
-
-function renderCartPage() {
-  const table = document.getElementById('ppg-cart-table');
-  if (!table) return; // No estamos en carrito.html
-
-  const tbody = table.querySelector('tbody');
-  const totalEl = document.getElementById('ppg-cart-total');
-  const emptyEl = document.getElementById('ppg-cart-empty');
-
-  const items = Cart.all();
-  tbody.innerHTML = '';
-
-  if (items.length === 0) {
-    emptyEl.style.display = 'block';
-    table.style.display = 'none';
-    totalEl.textContent = CLP.format(0);
-    return;
-  }
-
-  emptyEl.style.display = 'none';
-  table.style.display = 'table';
-
-  items.forEach((it) => {
-    const tr = document.createElement('tr');
-
-    tr.innerHTML = `
-      <td style="display:flex; gap:12px; align-items:center;">
-        <img src="${it.img || ''}" alt="" style="width:56px;height:56px;object-fit:cover;border-radius:8px;">
-        <div><strong>${it.name}</strong><br><small>${CLP.format(it.price)}</small></div>
-      </td>
-      <td style="width:140px;">
-        <input type="number" min="1" value="${it.qty}" style="width:80px;padding:6px;border-radius:8px;border:1px solid #ccc">
-      </td>
-      <td><strong>${CLP.format(it.price * it.qty)}</strong></td>
-      <td style="width:56px;">
-        <button class="ppg-del" aria-label="Eliminar" title="Eliminar" style="border:none;background:#dc3545;color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;">✕</button>
-      </td>
-    `;
-
-  
-    tr.querySelector('input').addEventListener('change', (e) => {
-      const v = Math.max(1, parseInt(e.target.value || '1', 10));
-      Cart.setQty(it.id, v);
-      renderCartPage();
-    });
-    tr.querySelector('.ppg-del').addEventListener('click', () => {
-      Cart.remove(it.id);
-      renderCartPage();
-    });
-
-    tbody.appendChild(tr);
-  });
-
-  totalEl.textContent = CLP.format(Cart.total());
-}
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
+// Inicialización
+document.addEventListener('DOMContentLoaded', function() {
+  // Muestra el badge del carrito
   Cart.renderBadge();
+  
+  // Añade botones a las tarjetas de productos
   enhanceCards();
-  renderCartPage();
-
-  const clearBtn = document.getElementById('ppg-clear-cart');
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      if (confirm('¿Vaciar el carrito?')) {
-        Cart.clear();
-        renderCartPage();
-      }
-    });
-  }
 });
