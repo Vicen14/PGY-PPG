@@ -92,3 +92,9 @@
 <script src="validaciones.js" defer></script>
 </body>
 </html>
+
+<form action="{% url 'carrito_agregar' p.id %}" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="qty" value="1">
+  <button type="submit">Añadir al carrito</button>
+</form>
