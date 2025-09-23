@@ -25,11 +25,11 @@
           <button type="submit" class="btn btn-primary w-100">Ingresar</button>
         </form>
         <div class="form-links">
-          <a href="recuperar.html">¿Olvidaste tu contraseña?</a>
+          <a href="{% url 'myPPG:recuperar' %}">¿Olvidaste tu contraseña?</a>
           <br>
-          <a href="registro.html">Registrarse</a>
+          <a href="{% url 'myPPG:registro' %}">Registrarse</a>
           <br>
-          <a href="index.html">Volver al inicio</a>
+          <a href="{% url 'myPPG:index' %}">Volver al inicio</a>
         </div>
       </div>
     </div>

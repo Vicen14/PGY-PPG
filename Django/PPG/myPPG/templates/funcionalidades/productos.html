@@ -15,25 +15,25 @@
 <body class="bg-custom">
 
 <header class="container header bg-custom text-primary mb-4">
-  <a href="index.html" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
+  <a href="{% url 'myPPG:index' %}" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
   <img src="{% static 'img/ppg-logo.png' %}" alt="PixelPlay Games" class="ppg-logo">
   </a>
 
   <nav class="nav">
-    <a href="index.html">Inicio</a>
-    <a href="categoria-accion.html">Acción</a>
-    <a href="categoria-deportes.html">Deportes</a>
-    <a href="categoria-aventura.html">Aventura</a>
-    <a href="categoria-carreras.html">Carreras</a>
-    <a href="categoria-indie.html">Indie</a>
-    <a href="carrito.html" class="btn btn-outline-primary btn-sm" id="verCarrito">Carrito</a>
+    <a href="{% url 'myPPG:index' %}">Inicio</a>
+    <a href="{% url 'myPPG:categoria_accion' %}">Acción</a>
+    <a href="{% url 'myPPG:categoria_deportes' %}">Deportes</a>
+    <a href="{% url 'myPPG:categoria_aventura' %}">Aventura</a>
+    <a href="{% url 'myPPG:categoria_carreras' %}">Carreras</a>
+    <a href="{% url 'myPPG:categoria_indie' %}">Indie</a>
+    <a href="{% url 'myPPG:carrito' %}" class="btn btn-outline-primary btn-sm" id="verCarrito">Carrito</a>
   </nav>
 
   <nav class="nav" id="navUsuario">
-    <a href="login.html" class="btn btn-primary btn-sm" id="loginLink">Iniciar sesión</a>
-    <a href="perfil.html" class="text-primary md d-none" id="perfilLink">Mi Perfil</a>
-    <a href="admin.html" class="admin-btn btn-sm d-none" id="adminLink">Admin</a>
-    <a href="registro.html" class="btn btn-outline-primary btn-sm" id="registroLink">Registrarse</a>
+    <a href="{% url 'myPPG:login' %}" class="btn btn-primary btn-sm" id="loginLink">Iniciar sesión</a>
+    <a href="{% url 'myPPG:perfil' %}" class="text-primary md d-none" id="perfilLink">Mi Perfil</a>
+    <a href="{% url 'myPPG:admin_panel' %}" class="admin-btn btn-sm d-none" id="adminLink">Admin</a>
+    <a href="{% url 'myPPG:registro' %}" class="btn btn-outline-primary btn-sm" id="registroLink">Registrarse</a>
     <span class="user-welcome d-none" id="userWelcome"></span>
     <button class="btn logout-btn btn-sm d-none" id="logoutBtn" onclick="handleLogout()">Cerrar sesión</button>
   </nav>
@@ -89,6 +89,6 @@
   });
 </script>
 
-<script src="validaciones.js" defer></script>
+<script src="{% static 'js/validaciones.js' %}" defer></script>
 </body>
 </html>
