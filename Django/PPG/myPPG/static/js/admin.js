@@ -6,6 +6,11 @@
   const CURRENT_USER_KEY = 'usuarioActual';
   const PRODUCTS_KEY = 'productos';
 
+  function handleLogout() {
+    localStorage.removeItem(CURRENT_USER_KEY);
+    location.href = 'login.html';
+    }
+
   // Semillas (para ver datos al entrar) 
   function seedProducts(){
     if(!localStorage.getItem(PRODUCTS_KEY)){
@@ -159,6 +164,12 @@
       e.target.reset();
     });
 
+
+    // boton de cerrar sesión
+    document.getElementById('btnLogout')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleLogout();
+    });
     document.getElementById('formProducto')?.addEventListener('submit', (e)=>{
       e.preventDefault();
       const data = Object.fromEntries(new FormData(e.target).entries());
