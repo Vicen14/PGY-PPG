@@ -173,6 +173,53 @@
   });
 </script>
 
+<script>
+  // Función para cerrar sesión
+  function handleLogout() {
+    localStorage.removeItem('usuarioActual');
+    window.location.href = 'index.html';
+  }
+
+  // verificar si hay un usuario logueado
+  document.addEventListener('DOMContentLoaded', function() {
+    const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
+    const loginLink = document.getElementById('loginLink');
+    const registroLink = document.getElementById('registroLink');
+    const perfilLink = document.getElementById('perfilLink');
+    const adminLink = document.getElementById('adminLink');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userWelcome = document.getElementById('userWelcome');
+    
+    if (usuario) {
+      // ocultar login y registro
+      loginLink.style.display = 'none';
+      registroLink.style.display = 'none';
+      
+      // mostrar perfil, bienvenida y logout
+      perfilLink.classList.remove('d-none');
+      logoutBtn.classList.remove('d-none');
+      userWelcome.classList.remove('d-none');
+      userWelcome.textContent = `Hola, ${usuario.nombre.split(' ')[0]}`;
+      
+      // si es admin mostrar enlace al panel
+      if (usuario.rol === 'administrador') {
+        adminLink.classList.remove('d-none');
+      }
+    } else {
+      // ocultar elementos de usuario logueado
+      perfilLink.classList.add('d-none');
+      adminLink.classList.add('d-none');
+      logoutBtn.classList.add('d-none');
+      userWelcome.classList.add('d-none');
+      
+      // mostrar login y registro
+      loginLink.style.display = 'block';
+      registroLink.style.display = 'block';
+    }
+  });
+</script>
+
+<!-- Cargar carrito.js AL FINAL -->
 <script src="{% static 'js/carrito.js' %}"></script>
 
 </body>
