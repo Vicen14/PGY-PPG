@@ -13,17 +13,17 @@
 <body class="bg-custom">
 
 <header class="container header bg-custom text-primary mb-4">
-<a href="index.html" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
+<a href="{% url 'myPPG:index' %}" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
   <img src="{% static 'img/ppg-logo.png' %}" alt="PixelPlay Games" class="ppg-logo">
 </a>
 
   <nav class="nav">
-    <a href="index.html" aria-label="Ir al inicio">Inicio</a>
-    <a href="categoria-accion.html" class="badge bg-primary text-white">Acción</a>
-    <a href="categoria-aventura.html">Aventura</a>
-    <a href="categoria-deportes.html">Deportes</a>
-    <a href="categoria-carreras.html">Carreras</a>
-    <a href="categoria-indie.html">Indie</a>
+    <a href="{% url 'myPPG:index' %}" aria-label="Ir al inicio">Inicio</a>
+    <a href="{% url 'myPPG:categoria_accion' %}" class="badge bg-primary text-white">Acción</a>
+    <a href="{% url 'myPPG:categoria_aventura' %}">Aventura</a>
+    <a href="{% url 'myPPG:categoria_deportes' %}">Deportes</a>
+    <a href="{% url 'myPPG:categoria_carreras' %}">Carreras</a>
+    <a href="{% url 'myPPG:categoria_indie' %}">Indie</a>
   </nav>
 </header>
 
@@ -107,7 +107,7 @@
 <div class="container navigation-links">
   <div class="d-flex justify-content-between mt-4">
     <span></span>
-    <a class="badge" href="categoria-aventura.html">Siguiente: Aventura →</a>
+    <a class="badge" href="{% url 'myPPG:categoria_aventura' %}">Siguiente: Aventura →</a>
   </div>
 </div>
 

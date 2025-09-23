@@ -49,7 +49,7 @@
       </form>
       
       <div class="form-links mt-3">
-        <a href="index.html">Volver al inicio</a>
+        <a href="{% url 'myPPG:index' %}">Volver al inicio</a>
       </div>
     </div>
   </div>
@@ -61,7 +61,7 @@
       const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
       
       if (!usuario) {
-        window.location.href = 'login.html';
+        window.location.href = "{% url 'myPPG:login' %}";
         return;
       }
       
@@ -77,12 +77,17 @@
         adminOptions.className = 'mt-3';
         adminOptions.innerHTML = `
           <div class="d-grid gap-2">
-            <a href="admin.html" class="btn btn-warning">Panel de Administración</a>
+            <a href="{% url 'myPPG:admin_panel' %}" class="btn btn-warning">Panel de Administración</a>
           </div>
         `;
         document.querySelector('form').after(adminOptions);
       }
     });
+
+    function handleLogout() {
+      localStorage.removeItem('usuarioActual');
+      window.location.href = "{% url 'myPPG:index' %}";
+    }
   </script>
  </body>
 </html>

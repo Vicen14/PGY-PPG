@@ -15,27 +15,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from myPPG import views
+from django.urls import path, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Frontend pages (serve the templates directly)
-    path('', views.index, name='index'),
-    path('index.html', views.index, name='index_html'),
-    path('productos.html', views.productos, name='productos'),
-    path('perfil.html', views.perfil, name='perfil'),
-    path('login.html', views.login_view, name='login'),
-    path('registro.html', views.registro, name='registro'),
-    path('recuperar.html', views.recuperar, name='recuperar'),
-    path('carrito.html', views.carrito, name='carrito'),
-    path('admin.html', views.admin_panel, name='admin_panel'),
+    #  URLs de la aplicación myPPG 
+    path('', include('myPPG.urls')),
 
-    # Category pages
-    path('categoria-accion.html', views.categoria_accion, name='categoria_accion'),
-    path('categoria-aventura.html', views.categoria_aventura, name='categoria_aventura'),
-    path('categoria-deportes.html', views.categoria_deportes, name='categoria_deportes'),
-    path('categoria-carreras.html', views.categoria_carreras, name='categoria_carreras'),
-    path('categoria-indie.html', views.categoria_indie, name='categoria_indie'),
+    # Redirecciones
+    path('index.html', RedirectView.as_view(url='/', permanent=True)),
+    path('productos.html', RedirectView.as_view(url='/productos/', permanent=True)),
+    path('perfil.html', RedirectView.as_view(url='/perfil/', permanent=True)),
+    path('login.html', RedirectView.as_view(url='/login/', permanent=True)),
+    path('registro.html', RedirectView.as_view(url='/registro/', permanent=True)),
+    path('recuperar.html', RedirectView.as_view(url='/recuperar/', permanent=True)),
+    path('carrito.html', RedirectView.as_view(url='/carrito/', permanent=True)),
+    path('admin.html', RedirectView.as_view(url='/admin-panel/', permanent=True)),
+
+    # redirecciones para categorías antiguas
+    path('categoria-accion.html', RedirectView.as_view(url='/categoria/accion/', permanent=True)),
+    path('categoria-aventura.html', RedirectView.as_view(url='/categoria/aventura/', permanent=True)),
+    path('categoria-deportes.html', RedirectView.as_view(url='/categoria/deportes/', permanent=True)),
+    path('categoria-carreras.html', RedirectView.as_view(url='/categoria/carreras/', permanent=True)),
+    path('categoria-indie.html', RedirectView.as_view(url='/categoria/indie/', permanent=True)),
 ]
