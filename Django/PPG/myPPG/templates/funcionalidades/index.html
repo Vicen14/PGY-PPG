@@ -11,25 +11,25 @@
 <body class="bg-custom">
 
 <header class="container header bg-custom text-primary mb-4">
-  <a href="index.html" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
+  <a href="{% url 'index' %}" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
   <img src="{% static 'img/ppg-logo.png' %}" alt="PixelPlay Games" class="ppg-logo">
   </a>
 
   <nav class="nav">
-    <a href="index.html" aria-label="Ir al inicio" class="text-primary fw-bold">Inicio</a>
-    <a href="categoria-accion.html" class="text-primary">Acción</a>
-    <a href="categoria-aventura.html" class="text-primary">Aventura</a>
-    <a href="categoria-deportes.html" class="text-primary">Deportes</a>
-    <a href="categoria-carreras.html" class="text-primary">Carreras</a>
-    <a href="categoria-indie.html" class="text-primary">Indie</a>
+    <a href="{% url 'index' %}" aria-label="Ir al inicio" class="text-primary fw-bold">Inicio</a>
+    <a href="{% url 'categoria_accion' %}" class="text-primary">Acción</a>
+    <a href="{% url 'categoria_aventura' %}" class="text-primary">Aventura</a>
+    <a href="{% url 'categoria_deportes' %}" class="text-primary">Deportes</a>
+    <a href="{% url 'categoria_carreras' %}" class="text-primary">Carreras</a>
+    <a href="{% url 'categoria_indie' %}" class="text-primary">Indie</a>
   </nav>
   
   <!-- NAVEGACIÓN DE USUARIO (SOLO UN ELEMENTO) -->
   <nav class="nav" id="navUsuario">
-    <a href="login.html" class="btn btn-primary btn-sm" id="loginLink">Iniciar sesión</a>
-    <a href="perfil.html" class="text-primary md d-none" id="perfilLink">Mi Perfil</a>
-    <a href="admin.html" class="admin-btn btn-sm d-none" id="adminLink">Admin</a>
-    <a href="registro.html" class="btn btn-outline-primary btn-sm" id="registroLink">Registrarse</a>
+    <a href="{% url 'login' %}" class="btn btn-primary btn-sm" id="loginLink">Iniciar sesión</a>
+    <a href="{% url 'perfil' %}" class="text-primary md d-none" id="perfilLink">Mi Perfil</a>
+    <a href="{% url 'admin_panel' %}" class="admin-btn btn-sm d-none" id="adminLink">Admin</a>
+    <a href="{% url 'registro' %}" class="btn btn-outline-primary btn-sm" id="registroLink">Registrarse</a>
     <span class="user-welcome d-none" id="userWelcome"></span>
     <button class="btn logout-btn btn-sm d-none" id="logoutBtn" onclick="handleLogout()">Cerrar sesión</button>
   </nav>
@@ -52,13 +52,13 @@
     <!-- Categoría Acción -->
     <div class="col-md-4 mb-4">
       <div class="category-card">
-        <a class="category-thumb" href="categoria-accion.html" aria-label="Abrir categoría Acción">
+        <a class="category-thumb" href="{% url 'categoria_accion' %}" aria-label="Abrir categoría Acción">
           <img src="{% static 'img/cyberpunk.jpg' %}" alt="Imagen categoría Acción">
         </a>
         <div class="category-content">
           <h3>Acción</h3>
           <p>Explora los juegos de acción disponibles.</p>
-          <a class="badge" href="categoria-accion.html">Ver categoría</a>
+          <a class="badge" href="{% url 'categoria_accion' %}">Ver categoría</a>
         </div>
       </div>
     </div>
@@ -66,13 +66,13 @@
     <!-- Categoría Aventura -->
     <div class="col-md-4 mb-4">
       <div class="category-card">
-        <a class="category-thumb" href="categoria-aventura.html" aria-label="Abrir categoría Aventura">
+        <a class="category-thumb" href="{% url 'categoria_aventura' %}" aria-label="Abrir categoría Aventura">
           <img src="{% static 'img/red-dead-2.jpg' %}" alt="Imagen categoría Aventura">
         </a>
         <div class="category-content">
           <h3>Aventura</h3>
           <p>Explora los juegos de aventura disponibles.</p>
-          <a class="badge" href="categoria-aventura.html">Ver categoría</a>
+          <a class="badge" href="{% url 'categoria_aventura' %}">Ver categoría</a>
         </div>
       </div>
     </div>
@@ -80,13 +80,13 @@
     <!-- Categoría Deportes -->
     <div class="col-md-4 mb-4">
       <div class="category-card">
-        <a class="category-thumb" href="categoria-deportes.html" aria-label="Abrir categoría Deportes">
+        <a class="category-thumb" href="{% url 'categoria_deportes' %}" aria-label="Abrir categoría Deportes">
           <img src="{% static 'img/eafc25.jpg' %}" alt="Imagen categoría Deportes">
         </a>
         <div class="category-content">
           <h3>Deportes</h3>
           <p>Explora los juegos de deportes disponibles.</p>
-          <a class="badge" href="categoria-deportes.html">Ver categoría</a>
+          <a class="badge" href="{% url 'categoria_deportes' %}">Ver categoría</a>
         </div>
       </div>
     </div>
@@ -96,13 +96,13 @@
     <!-- Categoría Carreras -->
     <div class="col-md-6 mb-4">
       <div class="category-card">
-        <a class="category-thumb" href="categoria-carreras.html" aria-label="Abrir categoría Carreras">
+        <a class="category-thumb" href="{% url 'categoria_carreras' %}" aria-label="Abrir categoría Carreras">
           <img src="{% static 'img/forza-horizon-5.png' %}" alt="Imagen categoría Carreras">
         </a>
         <div class="category-content">
           <h3>Carreras</h3>
           <p>Explora los juegos de carreras disponibles.</p>
-          <a class="badge" href="categoria-carreras.html">Ver categoría</a>
+          <a class="badge" href="{% url 'categoria_carreras' %}">Ver categoría</a>
         </div>
       </div>
     </div>
@@ -110,13 +110,13 @@
     <!-- Categoría Indie -->
     <div class="col-md-6 mb-4">
       <div class="category-card">
-        <a class="category-thumb" href="categoria-indie.html" aria-label="Abrir categoría Indie">
+        <a class="category-thumb" href="{% url 'categoria_indie' %}" aria-label="Abrir categoría Indie">
           <img src="{% static 'img/stardew-valley.webp' %}" alt="Imagen categoría Indie">
         </a>
         <div class="category-content">
           <h3>Indie</h3>
           <p>Explora los juegos de indie disponibles.</p>
-          <a class="badge" href="categoria-indie.html">Ver categoría</a>
+          <a class="badge" href="{% url 'categoria_indie' %}">Ver categoría</a>
         </div>
       </div>
     </div>
@@ -131,53 +131,7 @@
   // Función para cerrar sesión
   function handleLogout() {
     localStorage.removeItem('usuarioActual');
-    window.location.href = 'index.html';
-  }
-
-  // verificar si hay un usuario logueado
-  document.addEventListener('DOMContentLoaded', function() {
-    const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
-    const loginLink = document.getElementById('loginLink');
-    const registroLink = document.getElementById('registroLink');
-    const perfilLink = document.getElementById('perfilLink');
-    const adminLink = document.getElementById('adminLink');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const userWelcome = document.getElementById('userWelcome');
-    
-    if (usuario) {
-      // ocultar login y registro
-      loginLink.style.display = 'none';
-      registroLink.style.display = 'none';
-      
-      // mostrar perfil, bienvenida y logout
-      perfilLink.classList.remove('d-none');
-      logoutBtn.classList.remove('d-none');
-      userWelcome.classList.remove('d-none');
-      userWelcome.textContent = `Hola, ${usuario.nombre.split(' ')[0]}`;
-      
-      // si es admin mostrar enlace al panel
-      if (usuario.rol === 'administrador') {
-        adminLink.classList.remove('d-none');
-      }
-    } else {
-      // ocultar elementos de usuario logueado
-      perfilLink.classList.add('d-none');
-      adminLink.classList.add('d-none');
-      logoutBtn.classList.add('d-none');
-      userWelcome.classList.add('d-none');
-      
-      // mostrar login y registro
-      loginLink.style.display = 'block';
-      registroLink.style.display = 'block';
-    }
-  });
-</script>
-
-<script>
-  // Función para cerrar sesión
-  function handleLogout() {
-    localStorage.removeItem('usuarioActual');
-    window.location.href = 'index.html';
+    window.location.href = "{% url 'index' %}";
   }
 
   // verificar si hay un usuario logueado

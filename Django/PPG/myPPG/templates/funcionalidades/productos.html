@@ -15,25 +15,25 @@
 <body class="bg-custom">
 
 <header class="container header bg-custom text-primary mb-4">
-  <a href="index.html" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
+  <a href="{% url 'index' %}" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
   <img src="{% static 'img/ppg-logo.png' %}" alt="PixelPlay Games" class="ppg-logo">
   </a>
 
   <nav class="nav">
-    <a href="index.html">Inicio</a>
-    <a href="categoria-accion.html">Acción</a>
-    <a href="categoria-deportes.html">Deportes</a>
-    <a href="categoria-aventura.html">Aventura</a>
-    <a href="categoria-carreras.html">Carreras</a>
-    <a href="categoria-indie.html">Indie</a>
-    <a href="carrito.html" class="btn btn-outline-primary btn-sm" id="verCarrito">Carrito</a>
+    <a href="{% url 'index' %}">Inicio</a>
+    <a href="{% url 'categoria_accion' %}">Acción</a>
+    <a href="{% url 'categoria_deportes' %}">Deportes</a>
+    <a href="{% url 'categoria_aventura' %}">Aventura</a>
+    <a href="{% url 'categoria_carreras' %}">Carreras</a>
+    <a href="{% url 'categoria_indie' %}">Indie</a>
+    <a href="{% url 'carrito' %}" class="btn btn-outline-primary btn-sm" id="verCarrito">Carrito</a>
   </nav>
 
   <nav class="nav" id="navUsuario">
-    <a href="login.html" class="btn btn-primary btn-sm" id="loginLink">Iniciar sesión</a>
-    <a href="perfil.html" class="text-primary md d-none" id="perfilLink">Mi Perfil</a>
-    <a href="admin.html" class="admin-btn btn-sm d-none" id="adminLink">Admin</a>
-    <a href="registro.html" class="btn btn-outline-primary btn-sm" id="registroLink">Registrarse</a>
+    <a href="{% url 'login' %}" class="btn btn-primary btn-sm" id="loginLink">Iniciar sesión</a>
+    <a href="{% url 'perfil' %}" class="text-primary md d-none" id="perfilLink">Mi Perfil</a>
+    <a href="{% url 'admin_panel' %}" class="admin-btn btn-sm d-none" id="adminLink">Admin</a>
+    <a href="{% url 'registro' %}" class="btn btn-outline-primary btn-sm" id="registroLink">Registrarse</a>
     <span class="user-welcome d-none" id="userWelcome"></span>
     <button class="btn logout-btn btn-sm d-none" id="logoutBtn" onclick="handleLogout()">Cerrar sesión</button>
   </nav>
@@ -87,6 +87,11 @@
     if(!localStorage.getItem('productos')) localStorage.setItem('productos', JSON.stringify([]));
     pintarProductos();
   });
+  
+  function handleLogout() {
+    localStorage.removeItem('usuarioActual');
+    window.location.href = "{% url 'index' %}";
+  }
 </script>
 
 <script src="validaciones.js" defer></script>

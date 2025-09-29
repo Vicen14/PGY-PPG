@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
-from .models import Producto, Categoria # Asegúrate de importar tus modelos
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Producto, Categoria
 
-# --------------------------------------------------------------------------
-#  Vistas Principales y de Productos
-# --------------------------------------------------------------------------
+#  vistas principales y de productos
 
 def index(request):
     """ Muestra la página de inicio. """
@@ -16,23 +17,41 @@ def lista_productos(request):
     context = {'productos': productos}
     return render(request, 'funcionalidades/productos.html', context)
 
-# --------------------------------------------------------------------------
-#  Vistas de Autenticación
-# --------------------------------------------------------------------------
+#  vistas de Autenticación
 
 def registro(request):
     """ Lógica para registrar nuevos usuarios. """
     if request.method == 'POST':
-        # Aquí va la lógica para crear un nuevo usuario
-        pass
-    return render(request, 'funcionalidades/registro.html')
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            if user:
+                login(request, user)
+            messages.success(request, "Registro completado. Bienvenido.")
+            return redirect('perfil')
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = UserCreationForm()
+    return render(request, 'funcionalidades/registro.html', {'form': form})
 
 def login_view(request):
     """ Lógica para iniciar sesión. """
     if request.method == 'POST':
-        # Aquí va la lógica para autenticar al usuario
-        pass
-    return render(request, 'funcionalidades/login.html')
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            messages.success(request, "Has iniciado sesión correctamente.")
+            return redirect('index')
+        else:
+            messages.error(request, "Usuario o contraseña incorrectos.")
+    else:
+        form = AuthenticationForm()
+    return render(request, 'funcionalidades/login.html', {'form': form})
 
 def logout_view(request):
     """ Cierra la sesión del usuario. """
@@ -43,33 +62,40 @@ def recuperar(request):
     """ Muestra la página para recuperar contraseña. """
     return render(request, 'funcionalidades/recuperar.html')
 
-# --------------------------------------------------------------------------
-#  Vistas de Perfil de Usuario
-# --------------------------------------------------------------------------
 
+#  vistas de Perfil de Usuario
+
+
+@login_required
 def perfil(request):
     """ Muestra el perfil del usuario que ha iniciado sesión. """
-    # Aquí va la lógica para obtener los datos del usuario
     return render(request, 'funcionalidades/perfil.html')
 
+@login_required
 def editar_perfil(request):
     """ Lógica para que el usuario edite su información. """
     if request.method == 'POST':
-        # Aquí va la lógica para actualizar los datos del usuario
-        pass
-    # Debes crear una plantilla para editar el perfil o usar la misma.
-    return render(request, 'funcionalidades/perfil.html')
+        user = request.user
+        user.first_name = request.POST.get('first_name', user.first_name)
+        user.last_name = request.POST.get('last_name', user.last_name)
+        user.email = request.POST.get('email', user.email)
+        user.save()
+        messages.success(request, "Perfil actualizado correctamente.")
+        return redirect('perfil')
+    # Mostrar un formulario simple para editar (plantilla separada recomendada)
+    return render(request, 'funcionalidades/editar_perfil.html')
 
-# --------------------------------------------------------------------------
+
 #  Vistas del Carrito de Compras
-# --------------------------------------------------------------------------
 
+@login_required
 def ver_carrito(request):
     """ Muestra el contenido del carrito guardado en la sesión. """
     carrito = request.session.get('carrito', {})
     context = {'carrito': carrito}
     return render(request, 'funcionalidades/carrito.html', context)
 
+@login_required
 def agregar_al_carrito(request, producto_id):
     """ Agrega un producto al carrito en la sesión. """
     producto = get_object_or_404(Producto, id=producto_id)
@@ -89,6 +115,7 @@ def agregar_al_carrito(request, producto_id):
     request.session['carrito'] = carrito
     return redirect('carrito')
 
+@login_required
 def eliminar_del_carrito(request, producto_id):
     """ Elimina un producto del carrito en la sesión. """
     carrito = request.session.get('carrito', {})
@@ -98,20 +125,19 @@ def eliminar_del_carrito(request, producto_id):
         request.session['carrito'] = carrito
     return redirect('carrito')
 
+@login_required
 def limpiar_carrito(request):
     """ Elimina todos los productos del carrito. """
     if 'carrito' in request.session:
         del request.session['carrito']
     return redirect('carrito')
 
+@login_required
 def checkout(request):
     """ Lógica para procesar la compra. """
-    # Aquí iría la lógica para crear un objeto Pedido en la BD
-    return render(request, 'ruta/a/checkout.html') # Necesitas crear esta plantilla
+    return render(request, 'funcionalidades/checkout.html')
 
-# --------------------------------------------------------------------------
 #  Vistas de Categorías
-# --------------------------------------------------------------------------
 
 def categoria_accion(request):
     productos = Producto.objects.filter(categoria__nombre='Acción')
@@ -138,10 +164,9 @@ def categoria_indie(request):
     context = {'productos': productos, 'categoria': 'Indie'}
     return render(request, 'categorias/categoria-indie.html', context)
 
-# --------------------------------------------------------------------------
 #  Vista para el Panel de Admin Personalizado
-# --------------------------------------------------------------------------
 
+@login_required
 def admin_panel(request):
     """ Muestra el panel de administración personalizado. """
     return render(request, 'funcionalidades/admin.html')
