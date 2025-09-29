@@ -3,24 +3,23 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PixelPlay Games — Aventura</title>
   <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        crossorigin="anonymous">
 </head>
-<script src="carrito.js"></script>
-
 <body class="bg-custom">
 
 <header class="container header bg-custom text-primary mb-4">
   <a href="{% url 'index' %}" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
-  <img src="{% static 'img/ppg-logo.png' %}" alt="PixelPlay Games" class="ppg-logo">
-</a>
-
-  <nav class="nav">
-    <a href="{% url 'index' %}" aria-label="Ir al inicio">Inicio</a>
+    <img src="{% static 'img/ppg-logo.png' %}" alt="PixelPlay Games" class="ppg-logo">
+  </a>
+  <nav class="nav" aria-label="Categorías">
+    <a href="{% url 'index' %}">Inicio</a>
     <a href="{% url 'categoria_accion' %}">Acción</a>
-    <a href="{% url 'categoria_aventura' %}" class="badge bg-primary text-white">Aventura</a>
+    <a href="{% url 'categoria_aventura' %}" class="badge bg-primary text-white" aria-current="page">Aventura</a>
     <a href="{% url 'categoria_deportes' %}">Deportes</a>
     <a href="{% url 'categoria_carreras' %}">Carreras</a>
     <a href="{% url 'categoria_indie' %}">Indie</a>
@@ -28,63 +27,64 @@
 </header>
 
 <section class="container hero text-white">
-  <h1 style="margin:0 0 8px">Aventura</h1>
-  <p class="small">Descubre mundos fascinantes con nuestros juegos de aventura.</p>
+  <h1 class="mb-2">Aventura</h1>
+  <p class="small">Explora mundos increíbles y vive experiencias inolvidables.</p>
 </section>
 
 <main class="container">
   <div class="row">
     <div class="col-md-6 mb-4">
-      <article class="category-card">
+      <article class="category-card h-100">
         <div class="category-thumb">
-          <img src="{% static 'img/red-dead-2.jpg' %}" alt="Portada del juego Red Dead Redemption 2">
+          <img src="{% static 'img/uncharted-4.webp' %}" alt="Portada de Uncharted 4" loading="lazy">
         </div>
         <div class="category-content">
-          <h3>Red Dead Redemption 2</h3>
-          <p>Juego de acción y aventura ambientado en un ficticio Estados Unidos 1899 y sigue las hazañas del forajido Arthur Morgan.</p>
-          <div class="price">$53.990</div>
+          <h3 class="h5">Uncharted 4</h3>
+          <p>Únete a Nathan Drake en su última aventura llena de acción y misterio.</p>
+          <div class="price">$34.990</div>
         </div>
       </article>
     </div>
-    
+
     <div class="col-md-6 mb-4">
-      <article class="category-card">
+      <article class="category-card h-100">
         <div class="category-thumb">
-          <img src="{% static 'img/gta-v.jpg' %}" alt="Portada del juego GTA V">
+          <img src="{% static 'img/assassins-creed-shadows.webp' %}" alt="Portada de Assassin's Creed Shadows" loading="lazy">
         </div>
         <div class="category-content">
-          <h3>GTA V</h3>
-          <p>Una entrega de la famosa saga de Grand Theft Auto, en esta edición sigues la historia de tres protagonistas.</p>
-          <div class="price">$24.990</div>
+          <h3 class="h5">Assassin's Creed Shadows</h3>
+          <p>Vive la historia de los ninjas en Japón feudal en esta entrega de Ubisoft.</p>
+          <div class="price">$64.990</div>
         </div>
       </article>
     </div>
+
     <div class="col-md-6 mb-4">
-      <article class="category-card">
+      <article class="category-card h-100">
         <div class="category-thumb">
-          <img src="{% static 'img/Uncharted 4.webp' %}" alt="Portada del juego Uncharted 4">
+          <img src="{% static 'img/nier-automata.webp' %}" alt="Portada de Nier Automata" loading="lazy">
         </div>
         <div class="category-content">
-          <h3>Uncharted 4</h3>
-          <p>Una entrega de la famosa saga de Uncharted, en esta edición sigues la historia de Nathan Drake en su última aventura.</p>
-          <div class="price">$24.990</div>
+          <h3 class="h5">Nier Automata</h3>
+          <p>Una mezcla única de RPG y acción con una historia profunda y emotiva.</p>
+          <div class="price">$44.990</div>
         </div>
       </article>
     </div>
+
     <div class="col-md-6 mb-4">
-      <article class="category-card">
+      <article class="category-card h-100">
         <div class="category-thumb">
-          <img src="{% static 'img/Nier Automata.webp' %}" alt="Portada del juego Nier Automata">
+          <img src="{% static 'img/elden-ring.jpg' %}" alt="Portada de Elden Ring" loading="lazy">
         </div>
         <div class="category-content">
-          <h3>Nier Automata</h3>
-          <p>Una entrega de la famosa saga de Nier, en esta edición sigues la historia de 2B y 9S en un mundo post-apocalíptico.</p>
-          <div class="price">$45.000</div>
+          <h3 class="h5">Elden Ring</h3>
+          <p>Explora un vasto mundo abierto creado por FromSoftware y George R.R. Martin.</p>
+          <div class="price">$59.990</div>
         </div>
       </article>
     </div>
   </div>
-
 </main>
 
 <div class="container navigation-links">
@@ -99,6 +99,5 @@
 </footer>
 
 <script src="{% static 'js/carrito.js' %}"></script>
-
 </body>
 </html>
