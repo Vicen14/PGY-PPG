@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from .models import Producto, Categoria
+from .models import Producto, Categoria, Pedido
+from .forms import RegistroPersonalizadoForm, EditarPerfilForm, ProductoForm, CategoriaForm
 
-#  vistas principales y de productos
+# vistas principales y de productos
 
 def index(request):
     """ Muestra la página de inicio. """
@@ -17,12 +18,12 @@ def lista_productos(request):
     context = {'productos': productos}
     return render(request, 'funcionalidades/productos.html', context)
 
-#  vistas de Autenticación
+# vistas de Autenticación
 
 def registro(request):
     """ Lógica para registrar nuevos usuarios. """
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistroPersonalizadoForm(request.POST)
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
@@ -35,7 +36,7 @@ def registro(request):
         else:
             messages.error(request, "Corrige los errores del formulario.")
     else:
-        form = UserCreationForm()
+        form = RegistroPersonalizadoForm()
     return render(request, 'funcionalidades/registro.html', {'form': form})
 
 def login_view(request):
@@ -63,8 +64,7 @@ def recuperar(request):
     return render(request, 'funcionalidades/recuperar.html')
 
 
-#  vistas de Perfil de Usuario
-
+# vistas de Perfil de Usuario
 
 @login_required
 def perfil(request):
@@ -75,18 +75,19 @@ def perfil(request):
 def editar_perfil(request):
     """ Lógica para que el usuario edite su información. """
     if request.method == 'POST':
-        user = request.user
-        user.first_name = request.POST.get('first_name', user.first_name)
-        user.last_name = request.POST.get('last_name', user.last_name)
-        user.email = request.POST.get('email', user.email)
-        user.save()
-        messages.success(request, "Perfil actualizado correctamente.")
-        return redirect('perfil')
-    # Mostrar un formulario simple para editar (plantilla separada recomendada)
-    return render(request, 'funcionalidades/editar_perfil.html')
+        form = EditarPerfilForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Perfil actualizado correctamente.")
+            return redirect('perfil')
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = EditarPerfilForm(instance=request.user)
+    return render(request, 'funcionalidades/editar_perfil.html', {'form': form})
 
 
-#  Vistas del Carrito de Compras
+# vistas del Carrito de Compras
 
 @login_required
 def ver_carrito(request):
@@ -137,7 +138,7 @@ def checkout(request):
     """ Lógica para procesar la compra. """
     return render(request, 'funcionalidades/checkout.html')
 
-#  Vistas de Categorías
+# vistas de Categorías
 
 def categoria_accion(request):
     productos = Producto.objects.filter(categoria__nombre='Acción')
@@ -164,8 +165,44 @@ def categoria_indie(request):
     context = {'productos': productos, 'categoria': 'Indie'}
     return render(request, 'categorias/categoria-indie.html', context)
 
-#  Vista para el Panel de Admin Personalizado
+# función para verificar si es admin
+def es_admin(user):
+    return user.is_staff
 
+# vistas de administración
+@login_required
+@user_passes_test(es_admin)
+def admin_crear_producto(request):
+    """ Vista para crear productos (solo admin) """
+    if request.method == 'POST':
+        form = ProductoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Producto creado correctamente.")
+            return redirect('admin_panel')
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = ProductoForm()
+    return render(request, 'admin/crear_producto.html', {'form': form})
+
+@login_required
+@user_passes_test(es_admin)
+def admin_crear_categoria(request):
+    """ Vista para crear categorías (solo admin) """
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Categoría creada correctamente.")
+            return redirect('admin_panel')
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = CategoriaForm()
+    return render(request, 'admin/crear_categoria.html', {'form': form})
+
+# vista para el Panel de Admin Personalizado
 @login_required
 def admin_panel(request):
     """ Muestra el panel de administración personalizado. """
