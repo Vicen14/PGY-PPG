@@ -5,6 +5,62 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .models import Producto, Categoria, Pedido
 from .forms import RegistroPersonalizadoForm, EditarPerfilForm, ProductoForm, CategoriaForm
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+import json
+
+def registrar_usuario(request):
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'error': 'Método no permitido.'}, status=405)
+
+    try:
+        data = json.loads(request.body or '{}')
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'error': 'JSON inválido.'}, status=400)
+
+    campos_obligatorios = ['nombre', 'apellidos', 'correo', 'rol']
+    for campo in campos_obligatorios:
+        if campo not in data or not str(data.get(campo, '')).strip():
+            return JsonResponse({'success': False, 'error': f'Campo {campo} es obligatorio.'}, status=400)
+
+    # contraseña puede venir en distintas claves; tomamos la primera disponible
+    password = (
+        data.get('clave')
+        or data.get('contraseña')
+        or data.get('contraeña')
+        or data.get('password')
+    )
+    if not password:
+        return JsonResponse({'success': False, 'error': 'Campo contraseña es obligatorio.'}, status=400)
+
+    if User.objects.filter(email=data['correo']).exists():
+        return JsonResponse({'success': False, 'error': 'Correo ya registrado.'}, status=409)
+
+    try:
+        username = data['correo']
+        if User.objects.filter(username=username).exists():
+            base = username
+            i = 1
+            while User.objects.filter(username=f"{base}-{i}").exists():
+                i += 1
+            username = f"{base}-{i}"
+
+        user = User.objects.create_user(
+            username=username,
+            first_name=str(data.get('nombre', '')).strip(),
+            last_name=str(data.get('apellidos', '')).strip(),
+            email=data['correo'],
+            password=password,
+        )
+
+        rol = str(data.get('rol', '')).strip().lower()
+        if rol in ('admin', 'staff'):
+            user.is_staff = True
+            user.save(update_fields=['is_staff'])
+
+        return JsonResponse({'success': True, 'message': 'Usuario registrado correctamente en Oracle.'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 # vistas principales y de productos
 
