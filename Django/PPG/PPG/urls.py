@@ -71,3 +71,6 @@ urlpatterns = [
 # servir archivos estáticos y media en desarrollo
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.BASE_DIR / 'static')
+
+
+# tengo que meter los htmls que creé pa la API de rawg 

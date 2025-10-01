@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.cache import cache
+from datetime import datetime, timedelta
+
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
@@ -40,3 +43,48 @@ class ItemPedido(models.Model):
 
     def __str__(self):
         return f'{self.cantidad} x {self.producto.nombre} en Pedido #{self.pedido.id}'
+
+
+
+class Juego(models.Model):
+    # para que no se repitan usamos el id de rawg
+    rawg_id = models.IntegerField(unique=True)
+    nombre = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+    descripcion = models.TextField(blank=True, null=True)
+    fecha_lanzamiento = models.DateField(blank=True, null=True)
+    rating = models.DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
+    rating_top = models.IntegerField(default=5)
+    imagen_fondo = models.URLField(max_length=500, blank=True, null=True)
+    web_juego = models.URLField(max_length=500, blank=True, null=True)
+
+    # para saber cuando creamos el modelo
+    creado = models.DateTimeField(auto_now_add=True)
+    actualizado = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'myppg_producto'
+        ordering = ['-rating', 'nombre']
+
+        def __str__(self):
+            return self.nombre
+
+class Genero(models.Model):
+    rawg_id = models.IntegerField(unique=True)
+    nombre = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
+
+    class Meta:
+        db_table = 'myppg_categoria'
+
+    def __str__(self):
+        return self.nombre
+
+
+class GeneroJuego(models.Model):
+    juego = models.ForeignKey(Juego, on_delete=models.CASCADE, related_name='genero_juego')
+    genero = models.ForeignKey(Genero, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'genero_juego'
+        unique_together = ['juego', 'genero']

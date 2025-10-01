@@ -7,6 +7,9 @@ from .models import Producto, Categoria, Pedido
 from .forms import RegistroPersonalizadoForm, EditarPerfilForm, ProductoForm, CategoriaForm
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
+from .services.rawg_service import RAWGService
+from .models import Juego, Genero
 import json
 
 def registrar_usuario(request):
@@ -263,3 +266,61 @@ def admin_crear_categoria(request):
 def admin_panel(request):
     """ Muestra el panel de administración personalizado. """
     return render(request, 'funcionalidades/admin.html')
+
+
+
+# vistas de Juegos (RAWG API)
+
+def home(request):
+    """ Muestra la página principal con juegos populares. """
+    juegos_populares = RAWGService.get_popular_games()
+    context = {
+        'featured_juegos' : juegos_populares.get('results', []) if juegos_populares else [],
+        'titulo': 'Pixel Play Games - Inicio'
+    }
+    return render(request, 'templates/funcionalidades/index.html', context)
+
+def buscar_juegos(request):
+    # para buscar juegos
+
+    query = request.GET.get('q', '').strip()
+    page = request.GET.get('page', 1)
+
+    juegos = []
+    total_juegos = 0
+    total_pages = 0
+
+    if query:
+        resultados = RAWGService.search_games(query, page=page)
+        if resultados:
+            juegos = resultados.get('results', [])
+            total_juegos = resultados.get('count', 0)
+            total_pages = (total_juegos + 19) // 20 
+
+    #paginación
+    paginator = Paginator(range(total_juegos), 20) # 20 juegos por página
+    page_obj = paginator.get_page(page)
+
+    context =  {
+        'juegos': juegos,
+        'query': query,
+        'page_obj': page_obj,
+        'total_juegos': total_juegos,
+        'titulo': f'búsqueda de: {query}'if query else 'Buscar juegos'
+    }
+
+    return render(request, 'templates/funcionalidades/buscar.html', context)
+
+def detalle_juego(request, juego_id):
+    # para ver los detalles de un juego
+    datos_juego = RAWGService.get_game_details(juego_id)
+
+    if not datos_juego:
+        return render(request, 'templates/funcionalidades/error.html', status=404)
+    
+    context = {
+        'juego': datos_juego,
+        'titulo': datos_juego.get('name', 'Detalle del juego')
+    }
+
+    return render(request, 'templates/funcionalidades/detalle.html', context)
