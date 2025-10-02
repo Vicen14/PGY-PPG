@@ -26,7 +26,6 @@ def registrar_usuario(request):
         if campo not in data or not str(data.get(campo, '')).strip():
             return JsonResponse({'success': False, 'error': f'Campo {campo} es obligatorio.'}, status=400)
 
-    # contraseña puede venir en distintas claves; tomamos la primera disponible
     password = (
         data.get('clave')
         or data.get('contraseña')
@@ -65,22 +64,30 @@ def registrar_usuario(request):
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
-# vistas principales y de productos
-
+# vistas principales
 def index(request):
-    """ Muestra la página de inicio. """
-    return render(request, 'funcionalidades/index.html')
+    """Página de inicio con juegos de RAWG API"""
+    try:
+        juegos_populares = RAWGService.get_popular_games()
+        featured_games = juegos_populares.get('results', [])[:8] if juegos_populares else []
+    except Exception as e:
+        print(f"Error al cargar juegos populares: {e}")
+        featured_games = []
+    
+    context = {
+        'featured_games': featured_games,
+        'title': 'PixelPlay Games - Inicio'
+    }
+    return render(request, 'funcionalidades/index.html', context)
 
 def lista_productos(request):
-    """ Muestra todos los productos obtenidos de la base de datos. """
+    """Muestra todos los productos de la base de datos Oracle"""
     productos = Producto.objects.all()
     context = {'productos': productos}
     return render(request, 'funcionalidades/productos.html', context)
 
-# vistas de Autenticación
-
+# vistas de autenticación
 def registro(request):
-    """ Lógica para registrar nuevos usuarios. """
     if request.method == 'POST':
         form = RegistroPersonalizadoForm(request.POST)
         if form.is_valid():
@@ -99,7 +106,6 @@ def registro(request):
     return render(request, 'funcionalidades/registro.html', {'form': form})
 
 def login_view(request):
-    """ Lógica para iniciar sesión. """
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -114,25 +120,19 @@ def login_view(request):
     return render(request, 'funcionalidades/login.html', {'form': form})
 
 def logout_view(request):
-    """ Cierra la sesión del usuario. """
     logout(request)
     return redirect('index')
 
 def recuperar(request):
-    """ Muestra la página para recuperar contraseña. """
     return render(request, 'funcionalidades/recuperar.html')
 
-
-# vistas de Perfil de Usuario
-
+# perfil de usuario
 @login_required
 def perfil(request):
-    """ Muestra el perfil del usuario que ha iniciado sesión. """
     return render(request, 'funcionalidades/perfil.html')
 
 @login_required
 def editar_perfil(request):
-    """ Lógica para que el usuario edite su información. """
     if request.method == 'POST':
         form = EditarPerfilForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -145,19 +145,15 @@ def editar_perfil(request):
         form = EditarPerfilForm(instance=request.user)
     return render(request, 'funcionalidades/editar_perfil.html', {'form': form})
 
-
-# vistas del Carrito de Compras
-
+# carrito de compras
 @login_required
 def ver_carrito(request):
-    """ Muestra el contenido del carrito guardado en la sesión. """
     carrito = request.session.get('carrito', {})
     context = {'carrito': carrito}
     return render(request, 'funcionalidades/carrito.html', context)
 
 @login_required
 def agregar_al_carrito(request, producto_id):
-    """ Agrega un producto al carrito en la sesión. """
     producto = get_object_or_404(Producto, id=producto_id)
     carrito = request.session.get('carrito', {})
     id_str = str(producto_id)
@@ -177,7 +173,6 @@ def agregar_al_carrito(request, producto_id):
 
 @login_required
 def eliminar_del_carrito(request, producto_id):
-    """ Elimina un producto del carrito en la sesión. """
     carrito = request.session.get('carrito', {})
     id_str = str(producto_id)
     if id_str in carrito:
@@ -187,18 +182,15 @@ def eliminar_del_carrito(request, producto_id):
 
 @login_required
 def limpiar_carrito(request):
-    """ Elimina todos los productos del carrito. """
     if 'carrito' in request.session:
         del request.session['carrito']
     return redirect('carrito')
 
 @login_required
 def checkout(request):
-    """ Lógica para procesar la compra. """
     return render(request, 'funcionalidades/checkout.html')
 
-# vistas de Categorías
-
+# categorias bd
 def categoria_accion(request):
     productos = Producto.objects.filter(categoria__nombre='Acción')
     context = {'productos': productos, 'categoria': 'Acción'}
@@ -224,15 +216,14 @@ def categoria_indie(request):
     context = {'productos': productos, 'categoria': 'Indie'}
     return render(request, 'categorias/categoria-indie.html', context)
 
-# función para verificar si es admin
+# para ver si es admin
 def es_admin(user):
     return user.is_staff
 
-# vistas de administración
+# admin panel y creación de productos y categorías
 @login_required
 @user_passes_test(es_admin)
 def admin_crear_producto(request):
-    """ Vista para crear productos (solo admin) """
     if request.method == 'POST':
         form = ProductoForm(request.POST)
         if form.is_valid():
@@ -248,7 +239,6 @@ def admin_crear_producto(request):
 @login_required
 @user_passes_test(es_admin)
 def admin_crear_categoria(request):
-    """ Vista para crear categorías (solo admin) """
     if request.method == 'POST':
         form = CategoriaForm(request.POST)
         if form.is_valid():
@@ -261,66 +251,58 @@ def admin_crear_categoria(request):
         form = CategoriaForm()
     return render(request, 'admin/crear_categoria.html', {'form': form})
 
-# vista para el Panel de Admin Personalizado
 @login_required
 def admin_panel(request):
-    """ Muestra el panel de administración personalizado. """
     return render(request, 'funcionalidades/admin.html')
 
-
-
-# vistas de Juegos (RAWG API)
-
-def home(request):
-    """ Muestra la página principal con juegos populares. """
-    juegos_populares = RAWGService.get_popular_games()
-    context = {
-        'featured_juegos' : juegos_populares.get('results', []) if juegos_populares else [],
-        'titulo': 'Pixel Play Games - Inicio'
-    }
-    return render(request, 'templates/funcionalidades/index.html', context)
-
+# VISTAS DE JUEGOS RAWG API 
 def buscar_juegos(request):
-    # para buscar juegos
-
+    """Buscar juegos en RAWG API"""
     query = request.GET.get('q', '').strip()
     page = request.GET.get('page', 1)
-
-    juegos = []
-    total_juegos = 0
-    total_pages = 0
-
-    if query:
-        resultados = RAWGService.search_games(query, page=page)
-        if resultados:
-            juegos = resultados.get('results', [])
-            total_juegos = resultados.get('count', 0)
-            total_pages = (total_juegos + 19) // 20 
-
-    #paginación
-    paginator = Paginator(range(total_juegos), 20) # 20 juegos por página
+    
+    games = []
+    total_results = 0
+    
+    try:
+        if query:
+            results = RAWGService.search_games(query, page=page)
+            if results:
+                games = results.get('results', [])
+                total_results = results.get('count', 0)
+    except Exception as e:
+        print(f"Error en búsqueda de juegos: {e}")
+        messages.error(request, "Error al buscar juegos. Intenta nuevamente.")
+    
+    # paginación
+    paginator = Paginator(range(total_results), 20)
     page_obj = paginator.get_page(page)
-
-    context =  {
-        'juegos': juegos,
-        'query': query,
-        'page_obj': page_obj,
-        'total_juegos': total_juegos,
-        'titulo': f'búsqueda de: {query}'if query else 'Buscar juegos'
-    }
-
-    return render(request, 'templates/funcionalidades/buscar.html', context)
-
-def detalle_juego(request, juego_id):
-    # para ver los detalles de un juego
-    datos_juego = RAWGService.get_game_details(juego_id)
-
-    if not datos_juego:
-        return render(request, 'templates/funcionalidades/error.html', status=404)
     
     context = {
-        'juego': datos_juego,
-        'titulo': datos_juego.get('name', 'Detalle del juego')
+        'games': games,
+        'query': query,
+        'page_obj': page_obj,
+        'total_results': total_results,
+        'title': f'Búsqueda: {query}' if query else 'Buscar Juegos'
     }
+    
+    return render(request, 'funcionalidades/buscar-juegos.html', context)
 
-    return render(request, 'templates/funcionalidades/detalle.html', context)
+def detalle_juego(request, game_id):
+    """Detalle de un juego específico de RAWG"""
+    try:
+        game_data = RAWGService.get_game_details(game_id)
+        
+        if not game_data:
+            return render(request, 'funcionalidades/404.html', status=404)
+        
+        context = {
+            'game': game_data,
+            'title': game_data.get('name', 'Detalle del Juego')
+        }
+        
+        return render(request, 'funcionalidades/detalle-juego.html', context)
+    except Exception as e:
+        print(f"Error al cargar detalle del juego: {e}")
+        messages.error(request, "Error al cargar los detalles del juego.")
+        return redirect('buscar_juegos')

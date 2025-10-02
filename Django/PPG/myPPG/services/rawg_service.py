@@ -1,7 +1,6 @@
 import requests
 from django.conf import settings
 from django.core.cache import cache
-from datetime import datetime, timedelta
 import logging
 
 logger = logging.getLogger(__name__)
@@ -14,6 +13,11 @@ class RAWGService:
         """Método base para requests a RAWG"""
         if params is None:
             params = {}
+        
+        # Verificar que la API key esté configurada
+        if not hasattr(settings, 'RAWG_API_KEY') or not settings.RAWG_API_KEY:
+            logger.error("RAWG_API_KEY no configurada en settings.py")
+            return None
         
         params['key'] = settings.RAWG_API_KEY
         url = f"{RAWGService.BASE_URL}/{endpoint}"

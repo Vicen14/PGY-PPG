@@ -17,10 +17,10 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-         <a class="navbar-brand" href="{% url 'index' %}"> Pixel Play Games</a>
+            <a class="navbar-brand" href="{% url 'index' %}"> Pixel Play Games</a>
             
             <div class="navbar-collapse">
-                <form class="d-flex ms-auto" action="{% url 'game_search' %}" method="get">
+                <form class="d-flex ms-auto" action="{% url 'buscar_juego' %}" method="get">
                     <input class="form-control me-2" type="search" name="q" placeholder="Buscar juegos..." aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Buscar</button>
                 </form>

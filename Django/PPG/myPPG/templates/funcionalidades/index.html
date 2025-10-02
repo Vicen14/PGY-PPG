@@ -24,15 +24,21 @@
     <a href="{% url 'categoria_indie' %}" class="text-primary">Indie</a>
   </nav>
   
-  <!-- NAVEGACIÓN DE USUARIO (SOLO UN ELEMENTO) -->
+  <!-- NAVEGACIÓN DE USUARIO -->
   <nav class="nav" id="navUsuario">
+    
+    <form class="d-flex me-3" action="{% url 'buscar_juegos' %}" method="get">
+        <input class="form-control form-control-sm" type="search" name="q" placeholder="Buscar juegos..." aria-label="Search">
+        <button class="btn btn-outline-primary btn-sm ms-2" type="submit">Buscar</button>
+    </form>
+
     <a href="{% url 'login' %}" class="btn btn-primary btn-sm" id="loginLink">Iniciar sesión</a>
     <a href="{% url 'perfil' %}" class="text-primary md d-none" id="perfilLink">Mi Perfil</a>
     <a href="{% url 'admin_panel' %}" class="admin-btn btn-sm d-none" id="adminLink">Admin</a>
     <a href="{% url 'registro' %}" class="btn btn-outline-primary btn-sm" id="registroLink">Registrarse</a>
     <span class="user-welcome d-none" id="userWelcome"></span>
     <button class="btn logout-btn btn-sm d-none" id="logoutBtn" onclick="handleLogout()">Cerrar sesión</button>
-  </nav>
+</nav>
 </header>
 
 <section class="container hero text-white">
