@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ game.name }} - PixelPlay Games</title>
+    <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-custom">
+
+<header class="container header bg-custom text-primary mb-4">
+    <a href="{% url 'index' %}" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
+        <img src="{% static 'img/ppg-logo.png' %}" alt="PixelPlay Games" class="ppg-logo">
+    </a>
+
+    <nav class="nav">
+        <a href="{% url 'index' %}" class="text-primary">Inicio</a>
+        <a href="{% url 'buscar_juegos' %}" class="text-primary">Buscar Juegos</a>
+    </nav>
+    
+    <nav class="nav" id="navUsuario">
+        <form class="d-flex me-3" action="{% url 'buscar_juegos' %}" method="get">
+            <input class="form-control form-control-sm" type="search" name="q" placeholder="Buscar juegos..." aria-label="Search">
+            <button class="btn btn-outline-primary btn-sm ms-2" type="submit">Buscar</button>
+        </form>
+
+        <a href="{% url 'login' %}" class="btn btn-primary btn-sm" id="loginLink">Iniciar sesión</a>
+        <a href="{% url 'perfil' %}" class="text-primary md d-none" id="perfilLink">Mi Perfil</a>
+        <a href="{% url 'admin_panel' %}" class="admin-btn btn-sm d-none" id="adminLink">Admin</a>
+        <a href="{% url 'registro' %}" class="btn btn-outline-primary btn-sm" id="registroLink">Registrarse</a>
+        <span class="user-welcome d-none" id="userWelcome"></span>
+        <button class="btn logout-btn btn-sm d-none" id="logoutBtn" onclick="handleLogout()">Cerrar sesión</button>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% if game.background_image %}
+            <img src="{{ game.background_image }}" 
+                 class="img-fluid rounded" 
+                 alt="{{ game.name }}"
+                 style="max-height: 500px; width: 100%; object-fit: cover;">
+            {% else %}
+            <img src="{% static 'img/placeholder-game.jpg' %}" 
+                 class="img-fluid rounded" 
+                 alt="Imagen no disponible">
+            {% endif %}
+        </div>
+        
+        <div class="col-md-6">
+            <h1 class="text-white mb-3">{{ game.name }}</h1>
+            
+            {% if game.rating %}
+            <div class="game-rating mb-3">
+                <span class="rating-stars" style="font-size: 1.5rem;">⭐</span>
+                <strong style="font-size: 1.5rem; color: white;">{{ game.rating }}</strong>/5
+                <small class="text-muted">({{ game.ratings_count|default:0 }} votos)</small>
+            </div>
+            {% endif %}
+            
+            {% if game.released %}
+            <p class="text-white mb-3">
+                <strong>Fecha de lanzamiento:</strong> {{ game.released }}
+            </p>
+            {% endif %}
+            
+            {% if game.platforms %}
+            <div class="mb-3">
+                <strong class="text-white">Plataformas:</strong>
+                <div class="mt-2">
+                    {% for platform in game.platforms %}
+                    <span class="platform-badge me-1 mb-1">{{ platform.platform.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if game.genres %}
+            <div class="mb-3">
+                <strong class="text-white">Géneros:</strong>
+                <div class="mt-2">
+                    {% for genre in game.genres %}
+                    <span class="badge bg-primary me-1 mb-1">{{ genre.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if game.description %}
+            <div class="mb-3">
+                <strong class="text-white">Descripción:</strong>
+                <p class="text-white mt-2">{{ game.description|safe }}</p>
+            </div>
+            {% endif %}
+            
+            <div class="mt-4">
+                <button class="btn btn-success btn-lg ppg-add-btn">
+                    Añadir al Carrito
+                </button>
+                <a href="{% url 'buscar_juegos' %}" class="btn btn-outline-primary btn-lg ms-2">
+                    Volver a Búsqueda
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="container footer bg-custom text-primary mt-4">
+    <div>© 2025 PixelPlay Games — Sitio demostrativo para actividad PGY3221.</div>
+    <div class="text-muted small mt-2">Datos proporcionados por RAWG API</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function handleLogout() {
+        localStorage.removeItem('usuarioActual');
+        window.location.href = "{% url 'index' %}";
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
+        const loginLink = document.getElementById('loginLink');
+        const registroLink = document.getElementById('registroLink');
+        const perfilLink = document.getElementById('perfilLink');
+        const adminLink = document.getElementById('adminLink');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userWelcome = document.getElementById('userWelcome');
+        
+        if (usuario) {
+            loginLink.style.display = 'none';
+            registroLink.style.display = 'none';
+            perfilLink.classList.remove('d-none');
+            logoutBtn.classList.remove('d-none');
+            userWelcome.classList.remove('d-none');
+            userWelcome.textContent = `Hola, ${usuario.nombre.split(' ')[0]}`;
+            
+            if (usuario.rol === 'administrador') {
+                adminLink.classList.remove('d-none');
+            }
+        } else {
+            perfilLink.classList.add('d-none');
+            adminLink.classList.add('d-none');
+            logoutBtn.classList.add('d-none');
+            userWelcome.classList.add('d-none');
+            loginLink.style.display = 'block';
+            registroLink.style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>

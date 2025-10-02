@@ -795,3 +795,62 @@ body#ppg-cart-page a.btn-link {
     gap: 12px;
   }
 }
+
+
+
+.game-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.game-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.game-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.game-rating {
+    margin-bottom: 0.5rem;
+}
+
+.rating-stars {
+    color: #ffc107;
+}
+
+.platform-badge {
+    display: inline-block;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    padding: 2px 6px;
+    margin: 1px;
+    font-size: 0.75rem;
+}
+
+.page-title {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.search-results-info {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.no-results {
+    background: #f8f9fa;
+    border-radius: 10px;
+}

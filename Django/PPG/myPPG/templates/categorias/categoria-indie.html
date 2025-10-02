@@ -1,88 +1,87 @@
+{% load static %}
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PixelPlay Games — Indie</title>
-  <link rel="stylesheet" href="CSS/styles.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        crossorigin="anonymous">
 </head>
-<script src="carrito.js"></script>
-
 <body class="bg-custom">
 
 <header class="container header bg-custom text-primary mb-4">
- <a href="index.html" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
-  <img src="img/ppg-logo.png" alt="PixelPlay Games" class="ppg-logo">
-</a>
+  <a href="{% url 'index' %}" class="brand d-inline-flex align-items-center" aria-label="Ir al inicio">
+    <img src="{% static 'img/ppg-logo.png' %}" alt="PixelPlay Games" class="ppg-logo">
+  </a>
 
-  <nav class="nav">
-    <a href="index.html" aria-label="Ir al inicio">Inicio</a>
-    <a href="categoria-accion.html">Acción</a>
-    <a href="categoria-aventura.html">Aventura</a>
-    <a href="categoria-deportes.html">Deportes</a>
-    <a href="categoria-carreras.html">Carreras</a>
-    <a href="categoria-indie.html" class="badge bg-primary text-white">Indie</a>
+  <nav class="nav" aria-label="Categorías">
+    <a href="{% url 'index' %}">Inicio</a>
+    <a href="{% url 'categoria_accion' %}">Acción</a>
+    <a href="{% url 'categoria_aventura' %}">Aventura</a>
+    <a href="{% url 'categoria_deportes' %}">Deportes</a>
+    <a href="{% url 'categoria_carreras' %}">Carreras</a>
+    <a href="{% url 'categoria_indie' %}" class="badge bg-primary text-white" aria-current="page">Indie</a>
   </nav>
 </header>
 
 <section class="container hero text-white">
-  <h1 style="margin:0 0 8px">Indie</h1>
-  <p class="small">Descubre joyas independientes con experiencias únicas.</p>
+  <h1 class="mb-2">Indie</h1>
+  <p class="small">Descubre experiencias únicas creadas por estudios independientes.</p>
 </section>
 
 <main class="container">
   <div class="row">
     <div class="col-md-6 mb-4">
-      <article class="category-card">
+      <article class="category-card h-100">
         <div class="category-thumb">
-          <img src="img/stardew-valley.webp" alt="Portada del juego Stardew Valley">
+          <img src="{% static 'img/undertale.webp' %}" alt="Portada de Undertale" loading="lazy">
         </div>
         <div class="category-content">
-          <h3>Stardew Valley</h3>
-          <p>Simulador de granja con elementos de RPG y relaciones sociales.</p>
+          <h3 class="h5">Undertale</h3>
+          <p>Un RPG único donde tus decisiones determinan el destino de los personajes.</p>
           <div class="price">$14.990</div>
         </div>
       </article>
     </div>
-    
+
     <div class="col-md-6 mb-4">
-      <article class="category-card">
+      <article class="category-card h-100">
         <div class="category-thumb">
-          <img src="img/lethal-company.png" alt="Portada del juego Lethal Company">
+          <img src="{% static 'img/stardew-valley.webp' %}" alt="Portada de Stardew Valley" loading="lazy">
         </div>
         <div class="category-content">
-          <h3>Lethal Company</h3>
-          <p>Juego de terror y supervivencia cooperativo en entornos alienígenas.</p>
+          <h3 class="h5">Stardew Valley</h3>
+          <p>Construye tu granja, haz amigos y explora un mundo lleno de posibilidades.</p>
           <div class="price">$9.990</div>
         </div>
       </article>
     </div>
-  </div>
-  
-  <div class="row">
+
     <div class="col-md-6 mb-4">
-      <article class="category-card">
+      <article class="category-card h-100">
         <div class="category-thumb">
-          <img src="img/Undertale.webp" alt="Portada del juego Undertale">
+          <img src="{% static 'img/peak.webp' %}" alt="Portada de Peak" loading="lazy">
         </div>
         <div class="category-content">
-          <h3>Undertale</h3>
-          <p>Un RPG único donde las decisiones del jugador afectan la historia y el mundo.</p>
-          <div class="price">$14.990</div>
+          <h3 class="h5">Peak</h3>
+          <p>Un desafiante juego de plataformas con estilo retro y banda sonora envolvente.</p>
+          <div class="price">$7.990</div>
         </div>
       </article>
     </div>
-    
+
     <div class="col-md-6 mb-4">
-      <article class="category-card">
+      <article class="category-card h-100">
         <div class="category-thumb">
-          <img src="img/Peak.webp" alt="Portada del juego PEAK">
+          <img src="{% static 'img/lethal-company.png' %}" alt="Portada de Lethal Company" loading="lazy">
         </div>
         <div class="category-content">
-          <h3>PEAK</h3>
-          <p>Un juego de escalar montañas en equipo con amigos y biomas diferentes.</p>
-          <div class="price">$7.990</div>
+          <h3 class="h5">Lethal Company</h3>
+          <p>Un juego de terror cooperativo donde deberás sobrevivir y recolectar recursos.</p>
+          <div class="price">$19.990</div>
         </div>
       </article>
     </div>
@@ -91,8 +90,8 @@
 
 <div class="container navigation-links">
   <div class="d-flex justify-content-between mt-4">
-    <a class="badge" href="categoria-carreras.html">← Anterior: Carreras</a>
-    <span></span>
+    <a class="badge" href="{% url 'categoria_carreras' %}">← Anterior: Carreras</a>
+    <a class="badge" href="{% url 'index' %}">Siguiente: Inicio →</a>
   </div>
 </div>
 
@@ -101,6 +100,5 @@
 </footer>
 
 <script src="{% static 'js/carrito.js' %}"></script>
-
 </body>
 </html>
