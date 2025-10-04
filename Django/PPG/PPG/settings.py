@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myPPG.apps.MyppgConfig',
+    'rest_framework',
+    'rest_api',
 ]
 
 MIDDLEWARE = [

@@ -3,7 +3,7 @@ URL configuration for PPG project.
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from myPPG import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -48,6 +48,10 @@ urlpatterns = [
     # RAWG API 
     path('buscar/', views.buscar_juegos, name='buscar_juegos'),
     path('juego/<int:game_id>/', views.detalle_juego, name='detalle_juego'),
+
+
+    # API REST
+    path('api/', include('rest_api.urls')),
 ]
 
 # servir archivos estáticos en desarrollo
