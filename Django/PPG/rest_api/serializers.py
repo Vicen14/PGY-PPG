@@ -9,4 +9,4 @@ class ItemPedidoSerializer(serializers.ModelSerializer):
 class JuegoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Juego
-        fields = ['rawg_id', 'nombre', 'slug', 'descripcion', 'fecha_lanzamiento', 'rating', 'plataformas', 'generos', 'etiquetas', 'desarrolladores', 'creadores', 'metacritic', 'imagen']
+        fields = '__all__'

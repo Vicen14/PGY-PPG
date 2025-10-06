@@ -4,9 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
 
-from myPPG.models import ItemPedido, Juego  # Agrega Juego aquí
+from myPPG.models import ItemPedido, Juego
 from .serializers import ItemPedidoSerializer, JuegoSerializer
 
 @csrf_exempt
@@ -18,8 +17,7 @@ def lista_items_pedido(request):
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = ItemPedidoSerializer(data=data)
+        serializer = ItemPedidoSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -37,8 +35,7 @@ def lista_juegos(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = JuegoSerializer(data=data)
+        serializer = JuegoSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
