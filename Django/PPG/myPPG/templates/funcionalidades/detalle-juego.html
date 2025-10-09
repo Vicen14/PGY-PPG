@@ -35,7 +35,7 @@
     </nav>
 </header>
 
-<main class="container">
+<main class="container game-detail">  {# <- clase para forzar texto blanco #}
     <div class="row">
         <div class="col-md-6">
             {% if game.background_image %}
@@ -51,25 +51,25 @@
         </div>
         
         <div class="col-md-6">
-            <h1 class="text-white mb-3">{{ game.name }}</h1>
+            <h1 class="mb-3">{{ game.name }}</h1>
             
             {% if game.rating %}
             <div class="game-rating mb-3">
                 <span class="rating-stars" style="font-size: 1.5rem;">⭐</span>
-                <strong style="font-size: 1.5rem; color: white;">{{ game.rating }}</strong>/5
-                <small class="text-muted">({{ game.ratings_count|default:0 }} votos)</small>
+                <strong style="font-size: 1.5rem;">{{ game.rating }}</strong>/5
+                <small class="text-white-50">({{ game.ratings_count|default:0 }} votos)</small>
             </div>
             {% endif %}
             
             {% if game.released %}
-            <p class="text-white mb-3">
+            <p class="mb-3">
                 <strong>Fecha de lanzamiento:</strong> {{ game.released }}
             </p>
             {% endif %}
             
             {% if game.platforms %}
             <div class="mb-3">
-                <strong class="text-white">Plataformas:</strong>
+                <strong>Plataformas:</strong>
                 <div class="mt-2">
                     {% for platform in game.platforms %}
                     <span class="platform-badge me-1 mb-1">{{ platform.platform.name }}</span>
@@ -80,7 +80,7 @@
             
             {% if game.genres %}
             <div class="mb-3">
-                <strong class="text-white">Géneros:</strong>
+                <strong>Géneros:</strong>
                 <div class="mt-2">
                     {% for genre in game.genres %}
                     <span class="badge bg-primary me-1 mb-1">{{ genre.name }}</span>
@@ -91,16 +91,16 @@
             
             {% if game.description %}
             <div class="mb-3">
-                <strong class="text-white">Descripción:</strong>
-                <p class="text-white mt-2">{{ game.description|safe }}</p>
+                <strong>Descripción:</strong>
+                <p class="mt-2">{{ game.description|safe }}</p>
             </div>
             {% endif %}
             
-            <div class="mt-4">
+            <div class="mt-4 d-flex flex-wrap gap-2">
                 <button class="btn btn-success btn-lg ppg-add-btn">
                     Añadir al Carrito
                 </button>
-                <a href="{% url 'buscar_juegos' %}" class="btn btn-outline-primary btn-lg ms-2">
+                <a href="{% url 'buscar_juegos' %}" class="btn btn-outline-primary btn-lg">
                     Volver a Búsqueda
                 </a>
             </div>
