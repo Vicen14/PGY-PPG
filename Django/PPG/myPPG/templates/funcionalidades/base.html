@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,8 +9,9 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- CSS -->
-    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+    <!-- CSS personalizado -->
+    <!-- Ruta del archivo: myPPG/static/CSS/styles.css -->
+    <link href="{% static 'CSS/styles.css' %}" rel="stylesheet">
     
     {% block extra_css %}{% endblock %}
 </head>
@@ -20,7 +22,7 @@
             <a class="navbar-brand" href="{% url 'index' %}"> Pixel Play Games</a>
             
             <div class="navbar-collapse">
-                <form class="d-flex ms-auto" action="{% url 'buscar_juego' %}" method="get">
+                <form class="d-flex ms-auto" action="{% url 'buscar_juegos' %}" method="get">
                     <input class="form-control me-2" type="search" name="q" placeholder="Buscar juegos..." aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Buscar</button>
                 </form>

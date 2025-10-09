@@ -35,74 +35,71 @@
     </nav>
 </header>
 
-<main class="container game-detail">  {# <- clase para forzar texto blanco #}
-    <div class="row">
-        <div class="col-md-6">
-            {% if game.background_image %}
-            <img src="{{ game.background_image }}" 
-                 class="img-fluid rounded" 
-                 alt="{{ game.name }}"
-                 style="max-height: 500px; width: 100%; object-fit: cover;">
-            {% else %}
-            <img src="{% static 'img/placeholder-game.jpg' %}" 
-                 class="img-fluid rounded" 
-                 alt="Imagen no disponible">
-            {% endif %}
-        </div>
-        
-        <div class="col-md-6">
-            <h1 class="mb-3">{{ game.name }}</h1>
-            
-            {% if game.rating %}
-            <div class="game-rating mb-3">
-                <span class="rating-stars" style="font-size: 1.5rem;">⭐</span>
-                <strong style="font-size: 1.5rem;">{{ game.rating }}</strong>/5
-                <small class="text-white-50">({{ game.ratings_count|default:0 }} votos)</small>
-            </div>
-            {% endif %}
-            
-            {% if game.released %}
-            <p class="mb-3">
-                <strong>Fecha de lanzamiento:</strong> {{ game.released }}
-            </p>
-            {% endif %}
-            
-            {% if game.platforms %}
-            <div class="mb-3">
-                <strong>Plataformas:</strong>
-                <div class="mt-2">
-                    {% for platform in game.platforms %}
-                    <span class="platform-badge me-1 mb-1">{{ platform.platform.name }}</span>
-                    {% endfor %}
+<main class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="category-card" style="max-width: 1000px; margin: 0 auto;">
+                <div class="category-thumb" style="aspect-ratio: 16/9;">
+                    {% if game.background_image %}
+                    <img src="{{ game.background_image }}" 
+                         alt="{{ game.name }}">
+                    {% else %}
+                    <img src="{% static 'img/placeholder-game.jpg' %}" 
+                         alt="Imagen no disponible">
+                    {% endif %}
                 </div>
-            </div>
-            {% endif %}
-            
-            {% if game.genres %}
-            <div class="mb-3">
-                <strong>Géneros:</strong>
-                <div class="mt-2">
-                    {% for genre in game.genres %}
-                    <span class="badge bg-primary me-1 mb-1">{{ genre.name }}</span>
-                    {% endfor %}
+                
+                <div class="category-content" style="padding: 24px;">
+                    <h3 style="font-size: 2rem; margin-bottom: 16px;">{{ game.name }}</h3>
+                    
+                    {% if game.rating %}
+                    <p class="mb-3">
+                        <span style="font-size: 1.5rem;">⭐</span>
+                        <strong style="font-size: 1.5rem;">{{ game.rating }}</strong>/5
+                        <small>({{ game.ratings_count|default:0 }} votos)</small>
+                    </p>
+                    {% endif %}
+                    
+                    {% if game.released %}
+                    <p class="mb-3">
+                        <strong>Fecha de lanzamiento:</strong> {{ game.released }}
+                    </p>
+                    {% endif %}
+                    
+                    {% if game.platforms %}
+                    <p class="mb-3">
+                        <strong>Plataformas:</strong><br>
+                        {% for platform in game.platforms %}
+                        <span class="badge me-1 mb-1">{{ platform.platform.name }}</span>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    
+                    {% if game.genres %}
+                    <p class="mb-3">
+                        <strong>Géneros:</strong><br>
+                        {% for genre in game.genres %}
+                        <span class="badge me-1 mb-1">{{ genre.name }}</span>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    
+                    {% if game.description %}
+                    <p class="mb-4">
+                        <strong>Descripción:</strong><br>
+                        {{ game.description|safe }}
+                    </p>
+                    {% endif %}
+                    
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-success btn-lg" onclick="solicitarJuego('{{ game.name }}')">
+                            Solicitar
+                        </button>
+                        <a href="{% url 'buscar_juegos' %}" class="badge" style="display: inline-flex; align-items: center; padding: 12px 20px; font-size: 1rem;">
+                            Volver a Búsqueda
+                        </a>
+                    </div>
                 </div>
-            </div>
-            {% endif %}
-            
-            {% if game.description %}
-            <div class="mb-3">
-                <strong>Descripción:</strong>
-                <p class="mt-2">{{ game.description|safe }}</p>
-            </div>
-            {% endif %}
-            
-            <div class="mt-4 d-flex flex-wrap gap-2">
-                <button class="btn btn-success btn-lg ppg-add-btn">
-                    Añadir al Carrito
-                </button>
-                <a href="{% url 'buscar_juegos' %}" class="btn btn-outline-primary btn-lg">
-                    Volver a Búsqueda
-                </a>
             </div>
         </div>
     </div>
@@ -115,6 +112,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    function solicitarJuego(nombreJuego) {
+        alert('Juego solicitado, le avisaremos pronto sobre la disponibilidad');
+    }
+
     function handleLogout() {
         localStorage.removeItem('usuarioActual');
         window.location.href = "{% url 'index' %}";

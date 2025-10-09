@@ -54,6 +54,10 @@ urlpatterns = [
     path('api/', include('rest_api.urls')),
 ]
 
-# servir archivos estáticos en desarrollo
+# Servir archivos estáticos en desarrollo
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    from django.conf.urls.static import static
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+    
+    # Usar staticfiles_urlpatterns para servir archivos desde STATICFILES_DIRS
+    urlpatterns += staticfiles_urlpatterns()

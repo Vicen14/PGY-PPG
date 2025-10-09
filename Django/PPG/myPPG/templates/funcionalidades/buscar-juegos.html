@@ -67,55 +67,56 @@
     <div class="row">
         {% for game in games %}
         <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-            <div class="game-card card h-100">
-                {% if game.background_image %}
-                <img src="{{ game.background_image }}" 
-                     class="game-image card-img-top" 
-                     alt="{{ game.name }}"
-                     loading="lazy"
-                     style="height: 200px; object-fit: cover;">
-                {% else %}
-                <img src="{% static 'img/placeholder-game.jpg' %}" 
-                     class="card-img-top" 
-                     alt="Imagen no disponible"
-                     style="height: 200px; object-fit: cover;">
-                {% endif %}
+            <div class="category-card">
+                <div class="category-thumb">
+                    {% if game.background_image %}
+                    <img src="{{ game.background_image }}" 
+                         alt="{{ game.name }}"
+                         loading="lazy">
+                    {% else %}
+                    <img src="{% static 'img/placeholder-game.jpg' %}" 
+                         alt="Imagen no disponible">
+                    {% endif %}
+                </div>
                 
-                <div class="card-body">
-                    <h5 class="game-title card-title">{{ game.name }}</h5>
+                <div class="category-content">
+                    <h3>{{ game.name }}</h3>
                     
                     {% if game.rating %}
-                    <div class="game-rating mb-2">
-                        <span class="rating-stars">⭐</span>
+                    <p class="mb-2">
+                        <span>⭐</span>
                         <strong>{{ game.rating }}</strong>/5
-                        <small class="text-muted">({{ game.ratings_count|default:0 }} votos)</small>
-                    </div>
+                        <small>({{ game.ratings_count|default:0 }} votos)</small>
+                    </p>
                     {% endif %}
                     
                     {% if game.released %}
-                    <p class="game-release mb-2">
+                    <p class="mb-2">
                         <small>Lanzamiento: {{ game.released }}</small>
                     </p>
                     {% endif %}
                     
                     {% if game.platforms %}
-                    <div class="game-platforms">
+                    <p class="mb-3">
                         <small>
                             {% for platform in game.platforms|slice:":2" %}
-                                <span class="platform-badge">{{ platform.platform.name }}</span>
+                                <span class="badge">{{ platform.platform.name }}</span>
                             {% endfor %}
                             {% if game.platforms|length > 2 %}
-                                <span class="text-muted">+{{ game.platforms|length|add:"-2" }} más</span>
+                                <span>+{{ game.platforms|length|add:"-2" }} más</span>
                             {% endif %}
                         </small>
-                    </div>
+                    </p>
                     {% endif %}
-                </div>
-                
-                <div class="card-footer">
-                    <a href="{% url 'detalle_juego' game.id %}" class="btn btn-primary btn-sm w-100">
-                        Ver Detalles
-                    </a>
+                    
+                    <div class="d-flex gap-2 mt-auto">
+                        <button class="btn btn-success btn-sm flex-grow-1" onclick="solicitarJuego('{{ game.name }}')">
+                            Solicitar
+                        </button>
+                        <a href="{% url 'detalle_juego' game.id %}" class="badge" style="display: inline-flex; align-items: center; padding: 8px 12px;">
+                            Ver Detalles
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,6 +139,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    function solicitarJuego(nombreJuego) {
+        alert('Juego solicitado, le avisaremos pronto sobre la disponibilidad');
+    }
+
     function handleLogout() {
         localStorage.removeItem('usuarioActual');
         window.location.href = "{% url 'index' %}";

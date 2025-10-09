@@ -64,10 +64,11 @@ ROOT_URLCONF = 'PPG.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'myPPG' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -133,6 +134,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Directorios donde Django buscará archivos estáticos
+STATICFILES_DIRS = [
+    BASE_DIR / 'myPPG' / 'static',
+]
 
 # Añadir estas líneas para que login_required redirija a /login/ y para el redirect tras login
 LOGIN_URL = '/login/'
