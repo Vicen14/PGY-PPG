@@ -141,7 +141,7 @@
       // guardar usuario en sesión
       localStorage.setItem('usuarioActual', JSON.stringify(usuario));
       alert(`¡Bienvenido ${usuario.nombre}!`);
-      window.location.href = 'index.html';
+      window.location.href = '/';
     } else {
       alert('Credenciales incorrectas. Por favor, intente nuevamente.');
     }
@@ -177,7 +177,7 @@
     // iniciar sesión automaaticamente
     localStorage.setItem('usuarioActual', JSON.stringify(nuevoUsuario));
     alert('¡Registro exitoso! Bienvenido a PixelPlay Games.');
-    window.location.href = 'index.html';
+    window.location.href = '/';
   }
 
   // funcion para manejar la actualización del perfil
@@ -224,7 +224,7 @@
     // función para cerrar sesión
   function handleLogout() {
     localStorage.removeItem('usuarioActual');
-    window.location.href = 'index.html';
+    window.location.href = '/';
   }
 
   // hacer la función global para poder usarla desde HTML

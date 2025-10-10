@@ -74,7 +74,7 @@ const Cart = {
 
     const a = document.createElement('a');
     a.id = 'ppg-cart-badge';
-    a.href = 'carrito.html';
+    a.href = '/carrito/';
     a.setAttribute('aria-label', 'Abrir carrito');
     a.style.cssText = `
       position: fixed;

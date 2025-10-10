@@ -206,8 +206,8 @@
   // Permisos 
   function requireAdmin(){
     const user = JSON.parse(localStorage.getItem(CURRENT_USER_KEY)||'null');
-    if(!user){ alert('Debes iniciar sesión.'); location.href='login.html'; return false; }
-    if(user.rol !== 'administrador'){ alert('No tienes permisos.'); location.href='index.html'; return false; }
+    if(!user){ alert('Debes iniciar sesión.'); location.href='/login/'; return false; }
+    if(user.rol !== 'administrador'){ alert('No tienes permisos.'); location.href='/'; return false; }
     return true;
   }
 
