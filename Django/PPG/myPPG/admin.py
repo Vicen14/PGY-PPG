@@ -19,7 +19,7 @@ class ProductoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'categoria', 'precio', 'stock')
     list_filter = ('categoria',)
     search_fields = ('nombre', 'descripcion')
-    list_editable = ('precio', 'stock') # permite editar estos campos desde la lista
+    list_editable = ('precio', 'stock') 
 
 @admin.register(Pedido)
 class PedidoAdmin(admin.ModelAdmin):
